@@ -10,11 +10,6 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 
 
-/**
- * Implementation of the ICordovaClientCertRequest for Android WebView.
- *
- * Created by zhangxitao on 16/9/14.
- */
 public class X5CordovaClientCertRequest implements ICordovaClientCertRequest {
 
     private final ClientCertRequest request;

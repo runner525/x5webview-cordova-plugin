@@ -32,11 +32,6 @@
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	    
- 	    <activity
-            android:name="org.apache.cordova.x5engine.CordovaX5WebViewActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="cordova_x5webview" >
-	     </activity>
         </config-file>
 
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CookieManager.java" target-dir="src/org/apache/cordova/x5engine"/>
@@ -47,11 +42,11 @@
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebView.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewClient.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
-	<source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
+	<source-file src="platforms/android/src/org/apache/cordova/x5engine/CordovaX5WebViewActivity.java" target-dir="src/org/apache/cordova/x5engine"/>
 
         <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar" target-dir="libs"/>
-	<lib-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
-	<resource-file src="platforms/android/res/layout/activity_test_cordova_with_layout.xml" target-dir="res/layout"/>
+	<source-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
+	<source-file src="platforms/android/res/layout/activity_test_cordova_with_layout.xml" target-dir="res/layout"/>
 
 	
     </platform>

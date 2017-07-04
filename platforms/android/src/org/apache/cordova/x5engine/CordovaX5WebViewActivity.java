@@ -3,8 +3,10 @@ package org.apache.cordova.x5engine;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.WebView;
 
 import org.apache.cordova.CordovaActivity;
 import org.apache.cordova.CordovaWebView;
@@ -24,41 +26,18 @@ public class CordovaX5WebViewActivity extends CordovaActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_cordova_with_layout);
         super.init();
-        // Load your application
-        // launchUrl = "file:///android_asset/www/index.html"
-        Log.i("testlz","oncreaste version:" + QbSdk.getTbsVersion(CordovaX5WebViewActivity.this));
-//        loadUrl(launchUrl);
+//        setContentView(R.layout.activity_test_cordova_with_layout);
+//        ((TextView)findViewById(R.id.tvTip)).setText("X5CoreVersion:" + QbSdk.getTbsVersion(CordovaX5WebViewActivity.this));
         loadUrl("http://www.baidu.com");
+        Log.i(TAG, "CordovaX5WebViewActivity: x5CoreVersion:" + QbSdk.getTbsVersion(CordovaX5WebViewActivity.this));
     }
-
 
     @Override
     protected CordovaWebView makeWebView() {
-        Log.i("testlz","makeWebView:");
-        X5WebView webView = (X5WebView)findViewById(R.id.cordovaWebView);
-        Log.i("testlz","makeWebView version:" + QbSdk.getTbsVersion(CordovaX5WebViewActivity.this));
+//      X5WebView webView = (X5WebView)findViewById(R.id.cordovaWebView);
+        X5WebView webView = new X5WebView(CordovaX5WebViewActivity.this);
         return new CordovaWebViewImpl(new X5WebViewEngine(webView));
-    }
-
-    @Override
-    protected void createViews() {
-        //Why are we setting a constant as the ID? This should be investigated
-//        appView.getView().setId(100);
-//        appView.getView().setLayoutParams(new FrameLayout.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                ViewGroup.LayoutParams.MATCH_PARENT));
-//
-//        setContentView(appView.getView());
-        Log.i("testlz","createViews version:" + QbSdk.getTbsVersion(CordovaX5WebViewActivity.this));
-        if (preferences.contains("BackgroundColor")) {
-            int backgroundColor = preferences.getInteger("BackgroundColor", Color.BLACK);
-            // Background of activity:
-            appView.getView().setBackgroundColor(backgroundColor);
-        }
-
-        appView.getView().requestFocusFromTouch();
     }
 
 }

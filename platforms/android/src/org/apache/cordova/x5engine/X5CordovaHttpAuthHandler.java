@@ -1,17 +1,9 @@
 package org.apache.cordova.x5engine;
 
-/**
- * Created by zhangxitao on 16/9/14.
- */
-
 import com.tencent.smtt.export.external.interfaces.HttpAuthHandler;
 
 import org.apache.cordova.ICordovaHttpAuthHandler;
 
-/**
- * Specifies interface for HTTP auth handler object which is used to handle auth requests and
- * specifying user credentials.
- */
 public class X5CordovaHttpAuthHandler implements ICordovaHttpAuthHandler {
 
     private final HttpAuthHandler handler;

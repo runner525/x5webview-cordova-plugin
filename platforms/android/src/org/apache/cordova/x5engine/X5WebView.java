@@ -30,9 +30,7 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewEngine;
 
-/**
- * Custom WebView subclass that enables us to capture events needed for Cordova.
- */
+
 public class X5WebView extends WebView implements CordovaWebViewEngine.EngineView {
     private X5WebViewClient viewClient;
     X5WebChromeClient chromeClient;

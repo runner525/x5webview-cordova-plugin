@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-x5webview-plugin"
+        version="1.0.0">
+
+    <name>x5engine WebView Engine</name>
+    <description>Changes the default WebView to x5engine</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,chromium,x5engine,webview</keywords>
+
+    <engines>
+        <engine name="cordova-android" version=">=4"/>
+        <engine name="cordova-plugman" version=">=5.2.0"/><!-- needed for gradleReference support -->
+    </engines>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <preference name="webView" value="org.apache.cordova.x5engine.X5WebViewEngine"/>
+            <preference name="appUserAgent" value="appX5"/>
+            <preference name="android-minSdkVersion" value="15" />
+	    <allow-navigation href="*"></allow-navigation>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	    
+ 	    <activity
+            android:name="org.apache.cordova.x5engine.CordovaX5WebViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="cordova_x5webview" >
+	     </activity>
+        </config-file>
+
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CookieManager.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CordovaClientCertRequest.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CordovaHttpAuthHandler.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5ExposedJsApi.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebChromeClient.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebView.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewClient.java" target-dir="src/org/apache/cordova/x5engine"/>
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
+	<source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
+
+        <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar" target-dir="libs"/>
+	<lib-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
+	<resource-file src="platforms/android/res/layout/activity_test_cordova_with_layout.xml" target-dir="res/layout"/>
+
+	
+    </platform>
+
+    <info>
+
+    </info>
+</plugin>

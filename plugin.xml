@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="x5webview-cordova-plugin"
-        version="1.0.0">
+        version="1.1.0">
 
     <name>x5engine WebView Engine</name>
     <description>Changes the default WebView to x5engine</description>

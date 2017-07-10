@@ -1,6 +1,6 @@
 {
-  "name": "x5webview-cordova-plugin",
-  "version": "1.0.0",
+  "name": "runner525",
+  "version": "1.1.0",
   "description": "Changes the default WebView to x5engine",
   "cordova": {
     "id": "x5webview-cordova-plugin",
@@ -30,7 +30,7 @@
       "version": ">=5.2.0"
     }
   ],
-  "author": "",
+  "author": "lz",
   "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/runner525/x5webview-cordova-plugin/issues"

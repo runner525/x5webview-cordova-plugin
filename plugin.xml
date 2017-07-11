@@ -6,9 +6,9 @@
         version="1.1.0">
 
     <name>x5engine WebView Engine</name>
-    <description>Changes the default WebView to x5engine</description>
+    <description>use x5webview for cordova to get a better webview browsing experience</description>
     <license>Apache 2.0</license>
-    <keywords>cordova,chromium,x5engine,webview</keywords>
+    <keywords>x5webview,webview,chromium,cordova</keywords>
 
     <engines>
         <engine name="cordova-android" version=">=4"/>
@@ -20,7 +20,7 @@
 
         <config-file target="res/xml/config.xml" parent="/*">
             <preference name="webView" value="org.apache.cordova.x5engine.X5WebViewEngine"/>
-            <preference name="appUserAgent" value="appX5"/>
+            <preference name="appUserAgent" value="x5webview"/>
             <preference name="android-minSdkVersion" value="15" />
 	    <allow-navigation href="*"></allow-navigation>
         </config-file>
@@ -42,13 +42,10 @@
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebView.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewClient.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
-	<source-file src="platforms/android/src/org/apache/cordova/x5engine/CordovaX5WebViewActivity.java" target-dir="src/org/apache/cordova/x5engine"/>
 
         <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar" target-dir="libs"/>
 	<source-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
-	<source-file src="platforms/android/res/layout/activity_test_cordova_with_layout.xml" target-dir="res/layout"/>
 
-	
     </platform>
 
     <info>

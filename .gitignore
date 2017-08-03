@@ -1,0 +1,5 @@
+# ignore project config
+
+/.vscode
+/.history
+

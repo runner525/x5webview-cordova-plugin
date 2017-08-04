@@ -209,6 +209,12 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         settings.setAppCachePath(databasePath);
         settings.setAppCacheEnabled(true);
 
+        //
+        settings.setUseWideViewPort(true);
+
+        //如果webview内容宽度大于显示区域的宽度,那么将内容缩小,以适应显示区域的宽度, 默认是false
+        settings.setLoadWithOverviewMode(true);
+
         // Fix for CB-1405
         // Google issue 4641
         String defaultUserAgent = settings.getUserAgentString();
@@ -314,8 +320,12 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
     @Override
     public void setPaused(boolean value) {
         if (value) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                webView.onPause();
             webView.pauseTimers();
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                 webView.onResume();
             webView.resumeTimers();
         }
     }
@@ -351,3 +361,4 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         webView.evaluateJavascript(js,mCallback);
     }
 }
+

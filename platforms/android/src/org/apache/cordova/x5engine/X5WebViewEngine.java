@@ -148,6 +148,9 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
 
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        settings.setPluginState(WebSettings.PluginState.ON_DEMAND);
+
         // Set the nav dump for HTC 2.x devices (disabling for ICS, deprecated entirely for Jellybean 4.2)
         try {
             Method gingerbread_getMethod =  WebSettings.class.getMethod("setNavDump", new Class[] { boolean.class });

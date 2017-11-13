@@ -118,6 +118,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
                 X5WebViewEngine.this.cordova.getActivity().runOnUiThread(r);
             }
         }));
+        nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.EvalBridgeMode(this, cordova));
         bridge = new CordovaBridge(pluginManager, nativeToJsMessageQueue);
         exposeJsInterface(webView, bridge);
     }
@@ -355,7 +356,9 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
             @Override
             public void onReceiveValue(Object o) {
                 if(o instanceof String)
-                    proxyCallback.onReceiveValue((String) o);
+                    if (proxyCallback != null) {
+                        proxyCallback.onReceiveValue((String) o);
+                    }
             }
         };
         webView.evaluateJavascript(js,mCallback);

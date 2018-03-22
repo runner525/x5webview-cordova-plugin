@@ -146,7 +146,10 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        settings.setPluginState(WebSettings.PluginState.ON_DEMAND);
 
         // Set the nav dump for HTC 2.x devices (disabling for ICS, deprecated entirely for Jellybean 4.2)
         try {

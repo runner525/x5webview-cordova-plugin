@@ -25,10 +25,14 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Message;
+
 import com.tencent.smtt.export.external.interfaces.ClientCertRequest;
 import com.tencent.smtt.export.external.interfaces.HttpAuthHandler;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.export.external.interfaces.WebResourceError;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -41,7 +45,6 @@ import org.apache.cordova.PluginManager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Hashtable;
-
 
 /**
  * This class is the WebViewClient that implements callbacks for our web view.
@@ -65,21 +68,22 @@ public class X5WebViewClient extends WebViewClient {
     }
 
     /**
-     * Give the host application a chance to take over the control when a new url
-     * is about to be loaded in the current WebView.
+     * Give the host application a chance to take over the control when a new url is
+     * about to be loaded in the current WebView.
      *
-     * @param view          The WebView that is initiating the callback.
-     * @param url           The url to be loaded.
-     * @return              true to override, false for default behavior
+     * @param view The WebView that is initiating the callback.
+     * @param url  The url to be loaded.
+     * @return true to override, false for default behavior
      */
-	@Override
+    @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         return parentEngine.client.onNavigationAttempt(url);
     }
 
     /**
-     * On received http auth request.
-     * The method reacts on all registered authentication tokens. There is one and only one authentication token for any host + realm combination
+     * On received http auth request. The method reacts on all registered
+     * authentication tokens. There is one and only one authentication token for any
+     * host + realm combination
      */
     @Override
     public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
@@ -93,7 +97,8 @@ public class X5WebViewClient extends WebViewClient {
 
         // Check if there is some plugin which can resolve this auth challenge
         PluginManager pluginManager = this.parentEngine.pluginManager;
-        if (pluginManager != null && pluginManager.onReceivedHttpAuthRequest(null, new X5CordovaHttpAuthHandler(handler), host, realm)) {
+        if (pluginManager != null
+                && pluginManager.onReceivedHttpAuthRequest(null, new X5CordovaHttpAuthHandler(handler), host, realm)) {
             parentEngine.client.clearLoadTimeoutTimer();
             return;
         }
@@ -103,19 +108,19 @@ public class X5WebViewClient extends WebViewClient {
     }
 
     /**
-     * On received client cert request.
-     * The method forwards the request to any running plugins before using the default implementation.
+     * On received client cert request. The method forwards the request to any
+     * running plugins before using the default implementation.
      *
      * @param view
      * @param request
      */
     @TargetApi(21)
-    public void onReceivedClientCertRequest (WebView view, ClientCertRequest request)
-    {
+    public void onReceivedClientCertRequest(WebView view, ClientCertRequest request) {
 
         // Check if there is some plugin which can resolve this certificate request
         PluginManager pluginManager = this.parentEngine.pluginManager;
-        if (pluginManager != null && pluginManager.onReceivedClientCertRequest(null, new X5CordovaClientCertRequest(request))) {
+        if (pluginManager != null
+                && pluginManager.onReceivedClientCertRequest(null, new X5CordovaClientCertRequest(request))) {
             parentEngine.client.clearLoadTimeoutTimer();
             return;
         }
@@ -125,13 +130,14 @@ public class X5WebViewClient extends WebViewClient {
     }
 
     /**
-     * Notify the host application that a page has started loading.
-     * This method is called once for each main frame load so a page with iframes or framesets will call onPageStarted
-     * one time for the main frame. This also means that onPageStarted will not be called when the contents of an
-     * embedded frame changes, i.e. clicking a link whose target is an iframe.
+     * Notify the host application that a page has started loading. This method is
+     * called once for each main frame load so a page with iframes or framesets will
+     * call onPageStarted one time for the main frame. This also means that
+     * onPageStarted will not be called when the contents of an embedded frame
+     * changes, i.e. clicking a link whose target is an iframe.
      *
-     * @param view          The webview initiating the callback.
-     * @param url           The url of the page.
+     * @param view The webview initiating the callback.
+     * @param url  The url of the page.
      */
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -143,12 +149,13 @@ public class X5WebViewClient extends WebViewClient {
     }
 
     /**
-     * Notify the host application that a page has finished loading.
-     * This method is called only for main frame. When onPageFinished() is called, the rendering picture may not be updated yet.
+     * Notify the host application that a page has finished loading. This method is
+     * called only for main frame. When onPageFinished() is called, the rendering
+     * picture may not be updated yet.
      *
      *
-     * @param view          The webview initiating the callback.
-     * @param url           The url of the page.
+     * @param view The webview initiating the callback.
+     * @param url  The url of the page.
      */
     @Override
     public void onPageFinished(WebView view, String url) {
@@ -160,10 +167,11 @@ public class X5WebViewClient extends WebViewClient {
         isCurrentlyLoading = false;
 
         /**
-         * Because of a timing issue we need to clear this history in onPageFinished as well as
-         * onPageStarted. However we only want to do this if the doClearHistory boolean is set to
-         * true. You see when you load a url with a # in it which is common in jQuery applications
-         * onPageStared is not called. Clearing the history at that point would break jQuery apps.
+         * Because of a timing issue we need to clear this history in onPageFinished as
+         * well as onPageStarted. However we only want to do this if the doClearHistory
+         * boolean is set to true. You see when you load a url with a # in it which is
+         * common in jQuery applications onPageStared is not called. Clearing the
+         * history at that point would break jQuery apps.
          */
         if (this.doClearHistory) {
             view.clearHistory();
@@ -174,13 +182,14 @@ public class X5WebViewClient extends WebViewClient {
     }
 
     /**
-     * Report an error to the host application. These errors are unrecoverable (i.e. the main resource is unavailable).
-     * The errorCode parameter corresponds to one of the ERROR_* constants.
+     * Report an error to the host application. These errors are unrecoverable (i.e.
+     * the main resource is unavailable). The errorCode parameter corresponds to one
+     * of the ERROR_* constants.
      *
-     * @param view          The WebView that is initiating the callback.
-     * @param errorCode     The error code corresponding to an ERROR_* value.
-     * @param description   A String describing the error.
-     * @param failingUrl    The url that failed to load.
+     * @param view        The WebView that is initiating the callback.
+     * @param errorCode   The error code corresponding to an ERROR_* value.
+     * @param description A String describing the error.
+     * @param failingUrl  The url that failed to load.
      */
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -188,7 +197,8 @@ public class X5WebViewClient extends WebViewClient {
         if (!isCurrentlyLoading) {
             return;
         }
-        LOG.d(TAG, "CordovaWebViewClient.onReceivedError: Error code=%s Description=%s URL=%s", errorCode, description, failingUrl);
+        LOG.d(TAG, "CordovaWebViewClient.onReceivedError: Error code=%s Description=%s URL=%s", errorCode, description,
+                failingUrl);
 
         // If this is a "Protocol Not Supported" error, then revert to the previous
         // page. If there was no previous page, then punt. The application's config
@@ -207,14 +217,15 @@ public class X5WebViewClient extends WebViewClient {
     }
 
     /**
-     * Notify the host application that an SSL error occurred while loading a resource.
-     * The host application must call either handler.cancel() or handler.proceed().
-     * Note that the decision may be retained for use in response to future SSL errors.
-     * The default behavior is to cancel the load.
+     * Notify the host application that an SSL error occurred while loading a
+     * resource. The host application must call either handler.cancel() or
+     * handler.proceed(). Note that the decision may be retained for use in response
+     * to future SSL errors. The default behavior is to cancel the load.
      *
-     * @param view          The WebView that is initiating the callback.
-     * @param handler       An SslErrorHandler object that will handle the user's response.
-     * @param error         The SSL error object.
+     * @param view    The WebView that is initiating the callback.
+     * @param handler An SslErrorHandler object that will handle the user's
+     *                response.
+     * @param error   The SSL error object.
      */
     @TargetApi(8)
     @Override
@@ -240,6 +251,31 @@ public class X5WebViewClient extends WebViewClient {
         }
     }
 
+    @Override
+    public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest,
+            WebResourceError webResourceError) {
+        super.onReceivedError(webView, webResourceRequest, webResourceError);
+        String desc = webResourceError.getDescription().toString();
+        int code = webResourceError.getErrorCode();
+        onReceivedError(webView, code, desc, webView.getUrl());
+
+    }
+
+    @Override
+    public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest,
+            WebResourceResponse webResourceResponse) {
+        super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
+    }
+
+    @Override
+    public void onTooManyRedirects(WebView webView, Message message, Message message1) {
+        super.onTooManyRedirects(webView, message, message1);
+    }
+
+    @Override
+    public void onDetectedBlankScreen(String s, int i) {
+        super.onDetectedBlankScreen(s, i);
+    }
 
     /**
      * Sets the authentication token.
@@ -273,11 +309,7 @@ public class X5WebViewClient extends WebViewClient {
     /**
      * Gets the authentication token.
      *
-     * In order it tries:
-     * 1- host + realm
-     * 2- host
-     * 3- realm
-     * 4- no host, no realm
+     * In order it tries: 1- host + realm 2- host 3- realm 4- no host, no realm
      *
      * @param host
      * @param realm
@@ -330,7 +362,8 @@ public class X5WebViewClient extends WebViewClient {
             // Allow plugins to intercept WebView requests.
             Uri remappedUri = resourceApi.remapUri(origUri);
 
-            if (!origUri.equals(remappedUri) || needsSpecialsInAssetUrlFix(origUri) || needsKitKatContentUrlFix(origUri)) {
+            if (!origUri.equals(remappedUri) || needsSpecialsInAssetUrlFix(origUri)
+                    || needsKitKatContentUrlFix(origUri)) {
                 CordovaResourceApi.OpenForReadResult result = resourceApi.openForRead(remappedUri, true);
                 return new WebResourceResponse(result.mimeType, "UTF-8", result.inputStream);
             }
@@ -361,10 +394,10 @@ public class X5WebViewClient extends WebViewClient {
             return false;
         }
 
-        switch(Build.VERSION.SDK_INT){
-            case Build.VERSION_CODES.ICE_CREAM_SANDWICH:
-            case Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1:
-                return true;
+        switch (Build.VERSION.SDK_INT) {
+        case Build.VERSION_CODES.ICE_CREAM_SANDWICH:
+        case Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1:
+            return true;
         }
         return false;
     }

@@ -21,7 +21,7 @@
         <config-file target="res/xml/config.xml" parent="/*">
             <preference name="webView" value="org.apache.cordova.x5engine.X5WebViewEngine"/>
             <preference name="appUserAgent" value="x5webview"/>
-            <preference name="android-minSdkVersion" value="15" />
+            <preference name="android-minSdkVersion" value="16" />
 	    <allow-navigation href="*"></allow-navigation>
         </config-file>
 
@@ -43,8 +43,8 @@
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewClient.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
 
-        <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar" target-dir="libs"/>
-	<source-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
+        <lib-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar" arch="device"/>
+	    <lib-file src="platforms/android/libs/armeabi/liblbs.so" arch="device"/>
 
     </platform>
 

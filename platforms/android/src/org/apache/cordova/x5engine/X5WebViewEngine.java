@@ -118,6 +118,9 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
                 X5WebViewEngine.this.cordova.getActivity().runOnUiThread(r);
             }
         }));
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2)
+            nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.EvalBridgeMode(this, cordova));
         bridge = new CordovaBridge(pluginManager, nativeToJsMessageQueue);
         exposeJsInterface(webView, bridge);
     }
@@ -354,7 +357,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
          com.tencent.smtt.sdk.ValueCallback mCallback = new com.tencent.smtt.sdk.ValueCallback() {
             @Override
             public void onReceiveValue(Object o) {
-                if(o instanceof String)
+                if(proxyCallback!=null && o instanceof String)
                     proxyCallback.onReceiveValue((String) o);
             }
         };
